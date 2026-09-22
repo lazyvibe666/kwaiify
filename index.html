@@ -960,6 +960,19 @@
         const grid = document.getElementById('linkGrid');
         const searchInput = document.getElementById('searchInput');
 
+        
+        // Security: DOM-based XSS Prevention
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag]));
+        }
+
         function renderGrid(links) {
             grid.innerHTML = '';
             if (links.length === 0) {
@@ -1024,6 +1037,32 @@
         window.onclick = function(event) { if (event.target == document.getElementById('loginModal')) closeModal(); }
 
         renderGrid(database);
+
+        // --- SECURITY POLICIES ---
+        
+        // 1. Disable Right Click (Context Menu)
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (View Source)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+               (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) || 
+               (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
+                e.preventDefault();
+            }
+        });
+        
+        // 3. DevTools debugger trap deterrent
+        setInterval(function() {
+            const before = new Date().getTime();
+            debugger;
+            const after = new Date().getTime();
+            if (after - before > 100) {
+                // If debugger triggered, you can optionally clear body
+                // document.body.innerHTML = 'Inspect Element is Disabled.';
+            }
+        }, 1000);
+
     </script>
 </body>
 </html>
