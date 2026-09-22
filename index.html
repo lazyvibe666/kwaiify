@@ -25,14 +25,23 @@
         }
 
         body {
-            font-family: \'Poppins\', sans-serif;
+            font-family: 'Poppins', sans-serif;
             overscroll-behavior: none;
-            background: url('bg_new.png') no-repeat bottom left fixed;
-            background-size: cover;
             min-height: 100vh;
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
+        }
+        
+        /* The ultimate anti-glitch background technique */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('bg_abstract.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+            pointer-events: none;
         }
 
         body::before, body::after {
@@ -326,26 +335,6 @@
             padding: 0 30px;
         }
 
-        /* Intelligent Art-Aware Layout */
-        @media (min-width: 900px) {
-            .container {
-                margin-left: auto;
-                margin-right: 3%;
-                width: 65%;
-                max-width: 1100px;
-                padding-bottom: 80px;
-            }
-        }
-        
-        @media (max-width: 899px) {
-            .container {
-                padding-bottom: 45vh; /* Massive scroll space at the bottom to reveal the artwork! */
-            }
-            body {
-                background-size: cover;
-                background-position: bottom left;
-            }
-        }
 
 
                 .link-grid {
@@ -470,14 +459,15 @@
             background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
             backdrop-filter: blur(40px);
             border: 1px solid rgba(255,255,255,1);
-            padding: 40px;
-            border-radius: 28px;
+            padding: 45px 40px;
+            border-radius: 32px;
             text-align: center;
-            max-width: 420px;
-            width: 90%;
+            max-width: 400px;
+            width: 100%;
             position: relative;
             box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 40px rgba(255,107,158,0.15), inset 0 2px 5px rgba(255,255,255,1);
             animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-sizing: border-box;
         }
 
         @keyframes slideUp { from { transform: translateY(30px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
@@ -500,17 +490,19 @@
         
         .close-modal:hover { background: rgba(0,0,0,0.08); color: var(--primary); transform: scale(1.05); }
 
-        .modal-icon-bg {
-            width: 80px; height: 80px;
+                .modal-raw-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
             margin: 0 auto 20px;
-            background: linear-gradient(135deg, rgba(255,107,158,0.15), rgba(255,107,158,0.05));
-            border-radius: 24px;
-            display: flex; justify-content: center; align-items: center;
-            border: 1px solid rgba(255,107,158,0.2);
-            box-shadow: 0 10px 20px rgba(255,107,158,0.1);
+            display: block;
+            filter: drop-shadow(0 8px 16px rgba(255, 107, 158, 0.25));
+            transition: transform 0.3s ease;
         }
-
-        .modal-icon-bg img { width: 45px; height: 45px; object-fit: contain; }
+        
+        .modal-raw-logo:hover {
+            transform: scale(1.05);
+        }
 
         .glass-modal-content h2 { font-family: 'Nunito', sans-serif; font-size: 1.7rem; font-weight: 800; color: #1a1a1a; margin-bottom: 10px; letter-spacing: -0.5px; }
         .glass-modal-content p { color: #666; margin-bottom: 30px; font-size: 0.95rem; line-height: 1.5; }
@@ -549,8 +541,11 @@
             .premium-login-btn { padding: 8px 18px; font-size: 0.9rem; }
 
             .glass-modal-content {
-                padding: 25px;
-                width: 92%;
+                padding: 35px 25px;
+                width: 340px;
+                max-width: 90vw; /* Strictly prevents exceeding phone screen */
+                box-sizing: border-box;
+                border-radius: 28px;
             }
 
             
@@ -563,7 +558,7 @@
                 -webkit-mask-image: linear-gradient(to right, transparent, black 15px, black calc(100% - 15px), transparent);
             }
             
-            .container { padding: 0 15px 250px 15px; margin: 20px auto; }
+            .container { padding: 0 15px; margin: 20px auto; }
             .link-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Allow 2 columns on mobile */
                 gap: 15px;
@@ -580,6 +575,18 @@
                 grid-template-columns: 1fr; /* 1 column for very small phones */
             }
         }
+    
+        .footer-end {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: rgba(255, 107, 158, 0.8);
+            margin: 40px 0 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
     </style>
 </head>
 <body>
@@ -621,15 +628,14 @@
         <div class="link-grid" id="linkGrid">
             <!-- Glass Cards injected via JS -->
         </div>
+        <div class="footer-end">End</div>
     </div>
 
         <!-- Premium Glass Modal -->
     <div class="glass-modal" id="loginModal">
         <div class="glass-modal-content">
             <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            <div class="modal-icon-bg">
-                <img src="logo_transparent.png" alt="Logo">
-            </div>
+            <img src="logo_transparent.png" alt="Kwaiify Logo" class="modal-raw-logo">
             <h2>Welcome to Kwaiify</h2>
             <p>Sign in to submit, curate, and share your favorite kawaii links with the world.</p>
             <button class="social-glass-btn insta">
