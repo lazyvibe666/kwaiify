@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kwaiify - Cute & Useful Links</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <style>
+        html { overscroll-behavior: none; }
         :root {
             --glass-bg: rgba(255, 255, 255, 0.35);
             --glass-border: rgba(255, 255, 255, 0.5);
@@ -24,7 +25,8 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: \'Poppins\', sans-serif;
+            overscroll-behavior: none;
             background: url('bg_new.png') no-repeat bottom left fixed;
             background-size: cover;
             min-height: 100vh;
@@ -545,6 +547,12 @@
             .brand-name { font-size: 1.4rem; }
             .brand-logo-img { width: 36px; height: 36px; }
             .premium-login-btn { padding: 8px 18px; font-size: 0.9rem; }
+
+            .glass-modal-content {
+                padding: 25px;
+                width: 92%;
+            }
+
             
             /* Hide scroller arrows on mobile since swiping is natural */
             /* Hide scroller arrows on mobile since swiping is natural */
@@ -555,7 +563,7 @@
                 -webkit-mask-image: linear-gradient(to right, transparent, black 15px, black calc(100% - 15px), transparent);
             }
             
-            .container { padding: 0 15px 45vh 15px; margin: 20px auto; }
+            .container { padding: 0 15px 250px 15px; margin: 20px auto; }
             .link-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Allow 2 columns on mobile */
                 gap: 15px;
