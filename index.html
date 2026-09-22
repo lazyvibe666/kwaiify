@@ -556,7 +556,17 @@
             text-transform: uppercase;
         }
 
-    </style>
+    
+        .modal-divider {
+            display: flex; align-items: center; text-align: center;
+            color: #999; font-size: 0.8rem; font-weight: 700;
+            margin: 15px 0; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .modal-divider::before, .modal-divider::after {
+            content: ''; flex: 1; border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .modal-divider span { padding: 0 14px; }
+</style>
 </head>
 <body>
 
@@ -606,10 +616,11 @@
             <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
             <img src="logo_transparent.png" alt="Kwaiify Logo" class="modal-raw-logo">
             <h2>Welcome to Kwaiify</h2>
-            <p>Sign in to submit, curate, and share your favorite kawaii links with the world.</p>
+            <p>Sign in to submit your favorite links and support our community.</p>
             <button class="social-glass-btn insta">
                 <i class="fab fa-instagram"></i> Continue with Instagram
             </button>
+            <div class="modal-divider"><span>or</span></div>
             <button class="social-glass-btn tele">
                 <i class="fab fa-telegram-plane"></i> Continue with Telegram
             </button>
